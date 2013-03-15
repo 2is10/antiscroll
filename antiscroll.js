@@ -42,11 +42,6 @@
       'width':  this.y && ss ? (this.options.width  ? 'calc(' + ss + 'px + ' + this.options.width  + ')' : '+=' + ss) : null,
       'height': this.x && ss ? (this.options.height ? 'calc(' + ss + 'px + ' + this.options.height + ')' : '+=' + ss) : null});
 
-    var cssMap = {};
-    if (this.x) cssMap.width = '+=' + scrollbarSize();
-    if (this.y) cssMap.height = '+=' + scrollbarSize();
-    this.inner.css(cssMap);
-
     this.refresh();
   };
 
