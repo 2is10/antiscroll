@@ -228,24 +228,20 @@
     ev.preventDefault();
 
     this.dragging = true;
-
     this.startPageY = ev.pageY - parseInt(this.el.css('top'), 10);
     this.startPageX = ev.pageX - parseInt(this.el.css('left'), 10);
 
-    // prevent crazy selections on IE
-    this.el[0].ownerDocument.onselectstart = function () { return false; };
+    var self = this;
 
-    var pane = this.pane,
-	    move = $.proxy(this, 'mousemove'),
-		self = this
-
+    this.el.addClass('antiscroll-dragging');
     $(this.el[0].ownerDocument)
-      .mousemove(move)
-      .mouseup(function () {
+      .on('selectstart.antiscroll-drag', function() {return false})  // prevent crazy selections on IE
+      .on('mousemove.antiscroll-drag', $.proxy(this, 'mousemove'))
+      .on('mouseup.antiscroll-drag', function() {
         self.dragging = false;
-        this.onselectstart = null;
+        self.el.removeClass('antiscroll-dragging');
 
-        $(this).unbind('mousemove', move);
+        $(this).off('.antiscroll-drag');
 
         if (!self.enter) {
           self.hide();
