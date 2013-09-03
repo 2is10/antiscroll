@@ -37,11 +37,10 @@
     this.autoHide = false !== this.options.autoHide;
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
 
-    this.inner = this.el.find('.antiscroll-inner');
-    this.inner.css({
-        'width':  '+=' + (this.y ? scrollbarSize() : 0)
-      , 'height': '+=' + (this.x ? scrollbarSize() : 0)
-    });
+    var ss = scrollbarSize();
+    this.inner = this.el.find('.antiscroll-inner').css({
+      'width':  this.y && ss ? (this.options.width  ? 'calc(' + ss + 'px + ' + this.options.width  + ')' : '+=' + ss) : null,
+      'height': this.x && ss ? (this.options.height ? 'calc(' + ss + 'px + ' + this.options.height + ')' : '+=' + ss) : null});
 
     var cssMap = {};
     if (this.x) cssMap.width = '+=' + scrollbarSize();
@@ -58,7 +57,7 @@
    */
 
   Antiscroll.prototype.refresh = function() {
-    var needHScroll = this.inner.get(0).scrollWidth > this.el.width() + (this.y ? scrollbarSize() : 0), 
+    var needHScroll = this.inner.get(0).scrollWidth > this.el.width() + (this.y ? scrollbarSize() : 0),
 	    needVScroll = this.inner.get(0).scrollHeight > this.el.height() + (this.x ? scrollbarSize() : 0);
 
     if (this.x) {
@@ -309,7 +308,7 @@
    */
 
   Scrollbar.Horizontal.prototype.update = function () {
-    var paneWidth = this.pane.el.width(), 
+    var paneWidth = this.pane.el.width(),
 	    trackWidth = paneWidth - this.pane.padding * 2,
 		innerEl = this.pane.inner.get(0)
 
@@ -327,7 +326,7 @@
    */
 
   Scrollbar.Horizontal.prototype.mousemove = function (ev) {
-    var trackWidth = this.pane.el.width() - this.pane.padding * 2, 
+    var trackWidth = this.pane.el.width() - this.pane.padding * 2,
 	    pos = ev.pageX - this.startPageX,
 		barWidth = this.el.width(),
 		innerEl = this.pane.inner.get(0)
@@ -378,15 +377,15 @@
    */
 
   Scrollbar.Vertical.prototype.update = function () {
-    var paneHeight = this.pane.el.height(), 
+    var paneHeight = this.pane.el.height(),
 	    trackHeight = paneHeight - this.pane.padding * 2,
 		innerEl = this.innerEl;
-      
+
     var scrollbarHeight = trackHeight * paneHeight / innerEl.scrollHeight;
     scrollbarHeight = scrollbarHeight < 20 ? 20 : scrollbarHeight;
-    
+
     var topPos = trackHeight * innerEl.scrollTop / innerEl.scrollHeight;
-    
+
     if((topPos + scrollbarHeight) > trackHeight) {
         var diff = (topPos + scrollbarHeight) - trackHeight;
         topPos = topPos - diff - 3;
@@ -395,7 +394,7 @@
     this.el
       .css('height', scrollbarHeight)
       .css('top', topPos);
-	  
+
 	  return paneHeight < innerEl.scrollHeight;
   };
 
