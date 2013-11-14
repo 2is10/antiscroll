@@ -38,7 +38,7 @@
     this.padding = undefined == this.options.padding ? 2 : this.options.padding;
 
     var ss = scrollbarSize();
-    this.inner = this.el.find('.antiscroll-inner').css({
+    this.inner = this.el.find('.kifi-scroll-inner').css({
       'width':  this.y && ss ? (this.options.width  ? 'calc(' + ss + 'px + ' + this.options.width  + ')' : '+=' + ss) : null,
       'height': this.x && ss ? (this.options.height ? 'calc(' + ss + 'px + ' + this.options.height + ')' : '+=' + ss) : null});
 
@@ -228,13 +228,13 @@
 
     var self = this;
 
-    this.el.addClass('antiscroll-dragging');
+    this.el.addClass('kifi-scroll-dragging');
     $(this.el[0].ownerDocument)
       .on('selectstart.antiscroll-drag', function() {return false})  // prevent crazy selections on IE
       .on('mousemove.antiscroll-drag', $.proxy(this, 'mousemove'))
       .on('mouseup.antiscroll-drag', function() {
         self.dragging = false;
-        self.el.removeClass('antiscroll-dragging');
+        self.el.removeClass('kifi-scroll-dragging');
 
         $(this).off('.antiscroll-drag');
 
@@ -252,7 +252,7 @@
 
   Scrollbar.prototype.show = function (duration) {
     if (!this.shown && this.update()) {
-      this.el.addClass('antiscroll-scrollbar-shown');
+      this.el.addClass('kifi-scrollbar-shown');
       if (this.hiding) {
         clearTimeout(this.hiding);
         this.hiding = null;
@@ -270,7 +270,7 @@
   Scrollbar.prototype.hide = function () {
     if (this.pane.autoHide !== false && this.shown) {
       // check for dragging
-      this.el.removeClass('antiscroll-scrollbar-shown');
+      this.el.removeClass('kifi-scrollbar-shown');
       this.shown = false;
     }
   };
@@ -282,7 +282,7 @@
    */
 
   Scrollbar.Horizontal = function (pane) {
-    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-horizontal">', pane.el);
+    this.el = $('<div class="kifi-scrollbar kifi-scrollbar-horizontal">', pane.el);
     Scrollbar.call(this, pane);
   };
 
@@ -351,7 +351,7 @@
    */
 
   Scrollbar.Vertical = function (pane) {
-    this.el = $('<div class="antiscroll-scrollbar antiscroll-scrollbar-vertical">', pane.el);
+    this.el = $('<div class="kifi-scrollbar kifi-scrollbar-vertical">', pane.el);
     Scrollbar.call(this, pane);
   };
 
@@ -447,7 +447,7 @@
   function scrollbarSize () {
     if (size === undefined) {
       var div = $(
-          '<div class="antiscroll-inner" style="width:50px;height:50px;overflow-y:scroll;'
+          '<div class="kifi-scroll-inner" style="width:50px;height:50px;overflow-y:scroll;'
         + 'position:absolute;top:-200px;left:-200px;"><div style="height:100px;width:100%">'
         + '</div>'
       );
