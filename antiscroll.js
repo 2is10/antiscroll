@@ -452,7 +452,7 @@
         + '</div>'
       );
 
-      $('body').append(div);
+      $($('body')[0] || 'html').append(div);
       var w1 = $(div).innerWidth();
       var w2 = $('div', div).innerWidth();
       $(div).remove();
